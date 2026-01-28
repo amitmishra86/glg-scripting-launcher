@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GLG Scripting Launcher</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+  background: #e6e8f0;
+}
+
+.main-title {
+  font-weight: bold;
+  text-align: center;
+  margin: 30px 0;
+}
+
+.panel {
+  background: #d9dcee;
+  border: 3px solid #2f7d1e;
+  border-radius: 10px;
+  padding: 20px;
+  height: 100%;
+}
+
+.panel h4 {
+  margin-bottom: 20px;
+}
+
+.btn-green {
+  background: #2f7d1e;
+  color: white;
+  margin: 5px;
+}
+
+.btn-green:hover {
+  background: #256318;
+  color: #fff;
+}
+
+input[type=text] {
+  height: 45px;
+  font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid">
+  <h2 class="main-title">GLG Scripting...</h2>
+
+  <div class="row g-4 px-4">
+
+    <!-- LEFT PANEL -->
+    <div class="col-lg-6 col-md-12">
+      <div class="panel">
+        <h4>General Decipher Help Links</h4>
+
+        <button class="btn btn-green" data-url="https://glg.decipherinc.com/apps/portal/#/projects/list">Decipher Portal</button>
+        <button class="btn btn-green" data-url="https://translate.google.co.in/">Google Translate</button>
+        <button class="btn btn-green" data-url="https://forstasurveys.zendesk.com/hc/en-us/articles/4409476916763-Common-Shell-Commands">Command Shell</button>
+        <button class="btn btn-green" data-url="https://forstasurveys.zendesk.com/hc/en-us/articles/4409477235867-Creating-an-Email-Campaign">Mail Campaign</button>
+        <button class="btn btn-green" data-url="https://galaxy.glginsights.com/home">GLG galaxy</button>
+        <button class="btn btn-green" data-url="https://forstasurveys.zendesk.com/hc/en-us">Decipher Knowledge Base</button>
+        <button class="btn btn-green" data-url="http://www.colorpicker.com/">Color Picker</button>
+
+        <button class="btn btn-green" data-url="https://www.tutorialspoint.com/execute_python_online.php">Python Editor</button>
+        <button class="btn btn-green" data-url="https://oscarotero.com/jquery/">jQuery Shortcuts</button>
+        <button class="btn btn-green" data-url="https://glg.decipherinc.com/survey/selfserve/2227/230487">Function Library</button>
+        <button class="btn btn-green" data-url="https://forstasurveys.zendesk.com/hc/en-us/articles/4409469881883-System-Language-Resources">SYSTEM MESSAGE</button>
+        <button class="btn btn-green" data-url="https://glgit.sharepoint.com/sites/GurgaonSurveys/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FGurgaonSurveys%2FShared%20Documents%2FGurgaon%20Ops%2FTO%20BE%20UPDATED%2F2025%20Documents">ESS share point</button>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="col-lg-6 col-md-12">
+      <div class="panel">
+        <h4>Links related to Decipher</h4>
+
+        <input id="pid" class="form-control mb-3" placeholder="2227/ Enter Project ID">
+
+        <div class="mb-2">
+          <button class="btn btn-green action" data-type="quota">Quota Page</button>
+          <button class="btn btn-green action" data-type="builder">Open in Builder</button>
+          <button class="btn btn-green action" data-type="xml">Open XML</button>
+        </div>
+
+        <div class="mb-2">
+          <button class="btn btn-green action" data-type="viewxml">View XML</button>
+          <button class="btn btn-green action" data-type="lang">Languages Manager</button>
+          <button class="btn btn-green action" data-type="test">Test Link</button>
+          <button class="btn btn-green action" data-type="rdg">RDG</button>
+        </div>
+
+        <div>
+          <button class="btn btn-green action" data-type="download">Data Download</button>
+          <button class="btn btn-green action" data-type="edit">Edit Data</button>
+          <button class="btn btn-green action" data-type="settings">Project Setting</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+$(function () {
+
+  // Left panel links
+  $("button[data-url]").on("click", function () {
+    window.open($(this).data("url"), "_blank");
+  });
+
+  // Right panel actions
+  $(".action").on("click", function () {
+    let pid = $("#pid").val().trim();
+    if (!pid) {
+      alert("Please enter Project ID");
+      return;
+    }
+
+    let type = $(this).data("type");
+    let url = "";
+
+    if (type === "quota") url = `https://glg.decipherinc.com/rep/selfserve/${pid}:dashboard?tab=quota`;
+    if (type === "builder") url = `https://glg.decipherinc.com/apps/lumos/${pid}:edit`;
+    if (type === "xml") url = `https://glg.decipherinc.com/apps/lumos/${pid}:xmledit`;
+    if (type === "viewxml") url = `https://glg.decipherinc.com/apps/lumos/${pid}/temp-view:xmledit`;
+    if (type === "lang") url = `https://glg.decipherinc.com/apps/mls/selfserve/${pid}:edit`;
+    if (type === "test") url = `https://glg.decipherinc.com/survey/selfserve/${pid}`;
+    if (type === "rdg") url = `https://glg.decipherinc.com/admin/sst/sst?path=selfserve/${pid}`;
+    if (type === "download") url = `https://glg.decipherinc.com/report/selfserve/${pid}?run=1`;
+    if (type === "edit") url = `https://glg.decipherinc.com/rep/selfserve/${pid}:edit`;
+    if (type === "settings") url = `https://glg.decipherinc.com/apps/lumos/${pid}:edit#fn=openGlobalPreferences`;
+
+    window.open(url, "_blank");
+  });
+
+});
+</script>
+
+</body>
+</html>
